@@ -8,12 +8,12 @@ services:
     depends_on:
       - db
     environment:
-      - DB_HOST=db
+      - DB_HOST=localhost
       - DB_USER=root
       - DB_PASSWORD=supersecret
       - DB_NAME=desafiovirtex
-    volumes:
-      - ./server:/app
+    # volumes:
+    #   - server:/app
     restart: unless-stopped
   
   db:
@@ -24,6 +24,8 @@ services:
       MYSQL_DATABASE: desafiovirtex
     ports:
       - "3306:3306"
+    # volumes:
+    #   - database:/app
     restart: unless-stopped
 
   # client:
@@ -34,3 +36,7 @@ services:
   #   volumes:
   #     - ./client:/app
   #   restart: unless-stopped
+
+# volumes:
+#   server:
+#   database:

@@ -82,7 +82,8 @@ export default async function ZteParser(filename_SN: string, filename_State: str
           port: snItem.port,
           ont_id: snItem.ont_id,
           sn: snItem.sn?.replace("SN:", ""),
-          state: matchingStateItem.status
+          state: matchingStateItem.status,
+          ont_origin: 'zte'
         };
       }
       

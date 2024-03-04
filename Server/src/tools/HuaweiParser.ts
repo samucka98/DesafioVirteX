@@ -29,7 +29,8 @@ export default async function HuaweiParser(filename: string ) {
         port: campos[2][2],
         ont_id: campos[3],
         sn: campos[4],
-        state: campos[6]
+        state: campos[6], 
+        ont_origin: 'huawei'
     }
   });
 

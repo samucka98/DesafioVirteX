@@ -1,22 +1,6 @@
 version: '3.8'
 services:
-  api:
-    build: ./server
-    container_name: server_desafiovirtex
-    ports:
-      - "5000:5000"
-    depends_on:
-      - db
-    environment:
-      - DB_HOST=localhost
-      - DB_USER=root
-      - DB_PASSWORD=supersecret
-      - DB_NAME=desafiovirtex
-    # volumes:
-    #   - server:/app
-    restart: unless-stopped
-  
-  db:
+ db:
     image: mysql:5.7
     container_name: db_desafiovirtex
     environment:
@@ -24,19 +8,9 @@ services:
       MYSQL_DATABASE: desafiovirtex
     ports:
       - "3306:3306"
-    # volumes:
-    #   - database:/app
+    volumes:
+      - db_desafiovirtex:/var/lib/mysql
     restart: unless-stopped
 
-  # client:
-  #   build: ./client
-  #   container_name: client_desafiovirtex
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./client:/app
-  #   restart: unless-stopped
-
-# volumes:
-#   server:
-#   database:
+volumes:
+ db_desafiovirtex:

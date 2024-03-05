@@ -4,6 +4,7 @@ import HuaweiParser from './tools/HuaweiParser';
 import ZteParser from './tools/ZteParser';
 import sequelize from '../db/database';
 import ontinfo from '../models/ontinfo';
+import Loaddb from '../models/LoadDb';
 
 const app = express();
 
@@ -14,7 +15,28 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+sequelize.sync()
+ .then(() => {
+    console.log('Banco de dados sincronizado com sucesso!');
+ })
+ .catch((error) => {
+    console.error('Erro ao sincronizar o banco de dados:', error);
+ });
+
+
 app.get('/load-data', async (request, response) => {
+  const [loaddb, created] = await Loaddb.findOrCreate({
+    where: { loaded: false },
+    defaults: { loaded: false }
+  });
+
+  if (!created) {
+    response.status(200).send({
+      message: 'Dados já foram carregados anteriormente.'
+    });
+    return;
+ }
+
   const DataHuawei = await HuaweiParser('OntInfo - Huawei');
   const DataZte = await ZteParser('OntInfo - ZTE - SNs', 'OntInfo - ZTE - SNs - State');
 
